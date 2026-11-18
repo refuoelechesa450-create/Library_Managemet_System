@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: library-management-api-refuoelechesa450
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm run seed && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: library_management
+      - key: DB_SSL
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_ORIGIN
+        fromService:
+          type: web
+          name: library-management-frontend-refuoelechesa450
+          envVarKey: RENDER_EXTERNAL_URL
+
+  - type: web
+    name: library-management-frontend-refuoelechesa450
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_ORIGIN
+        fromService:
+          type: web
+          name: library-management-api-refuoelechesa450
+          envVarKey: RENDER_EXTERNAL_URL

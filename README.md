@@ -120,6 +120,18 @@ git push -u origin main
 
 Replace the example repository URL with your own. Do not upload your real `.env` file; it is excluded by `.gitignore`.
 
+## Publish an online demo
+
+This project can be published as a live React website with its Express API and MySQL-compatible database. The free hosting services have usage limits; Render may pause the API after 15 minutes without traffic, so the first visit after a pause can take about a minute.
+
+1. Create a MySQL-compatible TiDB Cloud Starter instance. In its **Connect** panel, note the host, port (4000), username (include the instance prefix, such as prefix.root) and generate a database password. Keep the password private.
+2. In the TiDB SQL Editor, run the contents of database/library.sql to create the database tables.
+3. Open the Render Dashboard and create a Blueprint from this GitHub repository. Render reads the root render.yaml and creates the API and frontend services.
+4. When Render asks for secret values, enter the TiDB host, TiDB username and TiDB password in Render only. The remaining deployment settings are already supplied or generated.
+5. Wait for both services to finish deploying. Open the frontend service URL to use the app. The API runs the existing demo-account seed command on startup.
+
+The demo account is intended only for coursework demonstration. Do not store real personal information in this public demo.
+
 ## Coursework note
 Use this project as a learning implementation. Read the comments and practise explaining:
 - how `useState` stores UI data and `useEffect` loads data,

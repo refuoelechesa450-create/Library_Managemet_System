@@ -35,6 +35,6 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ message: "An unexpected server error occurred." });
 });
 
-app.listen(PORT, () => {
-  console.log(`Library API listening at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log("Library API listening on port " + PORT);
 });
